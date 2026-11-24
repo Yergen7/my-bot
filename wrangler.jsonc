@@ -1,0 +1,10 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "my-bot",
+  "main": "src/index.ts",
+  "compatibility_date": "2026-11-01",
+  "workers_dev": true,
+  "observability": { "enabled": true }
+  // Секреты (TELEGRAM_BOT_TOKEN, WEBHOOK_SECRET) здесь НЕ пишем —
+  // они добавляются в dash.cloudflare.com или командой `wrangler secret put`.
+}
