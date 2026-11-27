@@ -29,9 +29,22 @@ async function getJson<T>(url: string): Promise<T> {
   return (await response.json()) as T;
 }
 
-export async function getWeather(): Promise<Weather> {
-  const url =
-    "https://api.open-meteo.com/v1/forecast?latitude=43.24&longitude=76.89&current=temperature_2m,wind_speed_10m&timezone=auto";
+export interface City {
+  name: string;
+  country?: string;
+  latitude: number;
+  longitude: number;
+}
+
+// Ищет координаты города по названию. Если такого города нет, возвращает undefined.
+export async function findCity(name: string): Promise<City | undefined> {
+  const url = `https://geocoding-api.open-meteo.com/v1/search?count=1&language=ru&name=${encodeURIComponent(name)}`;
+  const data = await getJson<{ results?: City[] }>(url);
+  return data.results?.[0];
+}
+
+export async function getWeather(city: City): Promise<Weather> {
+  const url = `https://api.open-meteo.com/v1/forecast?latitude=${city.latitude}&longitude=${city.longitude}&current=temperature_2m,wind_speed_10m&timezone=auto`;
   return getJson<Weather>(url);
 }
 

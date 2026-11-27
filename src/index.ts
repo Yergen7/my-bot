@@ -14,6 +14,9 @@ interface Env {
 
   // Здесь может храниться секрет для проверки запросов от Telegram.
   WEBHOOK_SECRET?: string;
+
+  // KV-хранилище, в котором бот запоминает город каждого чата.
+  CITY_KV: KVNamespace;
 }
 
 // Экспортируем основной обработчик Cloudflare Worker.
@@ -82,7 +85,7 @@ export default {
     // Просим Cloudflare продолжить обработку после отправки ответа.
     ctx.waitUntil(
       // Передаём обновление в функцию, которая обрабатывает сообщения бота.
-      handleUpdate(update, tg).catch((error) => {
+      handleUpdate(update, tg, env.CITY_KV).catch((error) => {
         // Выводим понятное описание ошибки в журнал Worker.
         console.error(
           // Добавляем пояснение перед текстом ошибки.

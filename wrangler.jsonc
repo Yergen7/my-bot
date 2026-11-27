@@ -4,7 +4,11 @@
   "main": "src/index.ts",
   "compatibility_date": "2026-11-01",
   "workers_dev": true,
-  "observability": { "enabled": true }
+  "observability": { "enabled": true },
+  // KV-хранилище my-bot-memory: здесь бот запоминает город каждого чата.
+  "kv_namespaces": [
+    { "binding": "CITY_KV", "id": "a4a1ccfaefbe45c082ee4623db895a33" }
+  ]
   // Секреты (TELEGRAM_BOT_TOKEN, WEBHOOK_SECRET) здесь НЕ пишем —
   // они добавляются в dash.cloudflare.com или командой `wrangler secret put`.
 }
